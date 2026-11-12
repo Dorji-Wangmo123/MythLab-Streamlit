@@ -67,12 +67,11 @@ def panel(title,body):
 if page=='Home':
     st.markdown('''<div class="hero"><div class="kicker">GROUP 1 · PRG304 GUI PROGRAMMING</div><h1>MythLab</h1><p>Exploring myths, legends and mythical creatures of Bhutan and beyond.</p><p style="color:#e3b85c">A digital mythology library built with Python, Tkinter and SQLite.</p></div>''',unsafe_allow_html=True)
     if (ROOT/'mythlab_preview.png').exists():
-        st.image(str(ROOT/'mythlab_preview.png'),caption='MythLab visual from the project presentation',use_container_width=True)
+        st.image(str(ROOT/'mythlab_preview.png'),caption='MythLab visual from the project presentation',width="stretch")
     st.subheader('Explore our project')
     cols=st.columns(3)
     for col,(t,d) in zip(cols,[('📖 Myths & Legends','Explore cultural stories and detailed myth information.'),('🐉 Mythical Creatures','Discover creatures from Bhutan and other traditions.'),('🧩 Interactive Features','Quiz, favourites, regions and a personal task dashboard.')]):
         with col:panel(t,d)
-    st.info('Use the left sidebar to move through the presentation during your group demonstration.')
 elif page=='Project Overview':
     heading('Introduction','Project Overview','MythLab is a Python desktop application for exploring myths, legends and mythical creatures, with a focus on Bhutan and selected stories from other countries.')
     a,b,c=st.columns(3)
@@ -80,9 +79,11 @@ elif page=='Project Overview':
     with b:panel('🐲 Mythical Creatures','Explore legendary beings and their cultural background.')
     with c:panel('🌏 Regions','Discover stories connected to different places.')
     st.subheader('Who is it for?')
-    st.write('Students and teachers, people interested in Bhutanese culture, readers of myths and legends, and general users.')
+    for user in ['Students and teachers', 'People interested in Bhutanese culture', 'Readers of myths and legends', 'General users']:
+        st.markdown(f'- {user}')
     st.subheader('Project Scope')
-    st.write('Browse myths and stories · Explore creatures · Discover regions · Take quizzes · Save favourites · Manage personal tasks')
+    for item in ['Browse myths and stories', 'Explore creatures', 'Discover regions', 'Take quizzes', 'Save favourites', 'Manage personal tasks']:
+        st.markdown(f'- {item}')
 elif page=='Problem & Solution':
     heading('Why we built it','Problem & Solution')
     a,b=st.columns(2)
@@ -104,13 +105,20 @@ elif page=='Main Features':
         for col,(t,d) in zip(cols,features[start:start+4]):
             with col:panel(t,d)
     st.subheader('Application preview')
-    if (ROOT/'mythlab_preview.png').exists():st.image(str(ROOT/'mythlab_preview.png'),use_container_width=True)
+    if (ROOT/'mythlab_preview.png').exists():st.image(str(ROOT/'mythlab_preview.png'),width="stretch")
 elif page=='System Design':
     heading('Behind the interface','System Design & Technologies')
-    st.table({'Technology':['Python','Tkinter','SQLite','Pillow','VS Code','GitHub'],'Purpose':['Programming language','Graphical interface','Database','Image display','Development','Version control']})
+    presentation_table(
+        ['Technology', 'Purpose'],
+        [('Python', 'Programming language'), ('Tkinter', 'Graphical interface'),
+         ('SQLite', 'Database'), ('Pillow', 'Image display'),
+         ('VS Code', 'Development'), ('GitHub', 'Version control')]
+    )
     st.subheader('How the system works')
     for i,x in enumerate(['User opens MythLab and enters through Welcome/Login.','User navigates using the sidebar.','Tkinter receives clicks and other actions.','Python processes actions and requests data.','SQLite stores or retrieves information.','The application displays the results.'],1):st.write(f'**Step {i}:** {x}')
-    st.caption('Original project files include main.py, welcome.py, myths.py, myth_detail.py, creatures.py, regions.py, quiz.py, task.py, about.py, database.py and assets/.')
+    st.subheader('Original Project Files')
+    for filename in ['main.py', 'welcome.py', 'myths.py', 'myth_detail.py', 'creatures.py', 'regions.py', 'quiz.py', 'task.py', 'about.py', 'database.py', 'assets/']:
+        st.markdown(f'- `{filename}`')
 elif page=='Testing & Results':
     heading('Quality checks','Testing & Results')
     st.write('Our group tested the main application features during development to check that they worked as intended. The results are summarised below.')
